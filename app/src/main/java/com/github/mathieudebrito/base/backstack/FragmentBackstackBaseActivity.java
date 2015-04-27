@@ -173,6 +173,8 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
                 .add(R.id.fragment_container, event.fragment)
                 .addToBackStack(event.fragmentName)
                 .commitAllowingStateLoss();
+
+        invalidateMenu();
     }
 
     @Subscribe
@@ -208,9 +210,9 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
             }
         }
 
-
         lastFragmentShown = ((Object) fragments.getLast()).getClass().getName();
 
+        invalidateMenu();
         KeyboardUtils.hide(this);
     }
 
@@ -244,6 +246,8 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
             fragments.get(0).onResume();
             lastFragmentShown = ((Object) fragments.getLast()).getClass().getName();
         }
+
+        invalidateMenu();
     }
 
     @Subscribe
@@ -285,6 +289,15 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         // No call for super(). Bug on API Level > 11.
         // https://code.google.com/p/android/issues/detail?id=19917
+    }
+
+    public void invalidateMenu() {
+
+        for (int numFragment = 0; numFragment < fragments.size(); numFragment++) {
+            fragments.get(numFragment).setMenuVisibility(numFragment == (fragments.size() - 1));
+        }
+
+        invalidateOptionsMenu();
     }
 
     public void updateLogoAndUp() {

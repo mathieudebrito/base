@@ -39,7 +39,7 @@ android {
     // DO NOT FORGET TO ALSO UPDATE THE GRADLE.PROPERTIES
     def versionMajor = 1
     def versionMinor = 2
-    def versionPatch = 0
+    def versionPatch = 1
     // DO NOT FORGET TO ALSO UPDATE THE GRADLE.PROPERTIES
 
     defaultConfig {
@@ -69,7 +69,7 @@ dependencies {
 
     compile 'org.androidannotations:androidannotations-api:3.2'
 
-    compile 'com.github.mathieudebrito:utils:1.2.0'
+    compile 'com.github.mathieudebrito:utils:1.2.1'
 
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.dagger:dagger:1.2.2'

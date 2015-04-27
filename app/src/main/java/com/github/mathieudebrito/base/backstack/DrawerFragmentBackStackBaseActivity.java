@@ -85,12 +85,12 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
 
             //Called when a drawer has settled in a completely closed state.
             public void onDrawerClosed(View view) {
-                invalidateOptionsMenu();
+                invalidateMenu();
                 drwToggle.syncState();
             }
 
             public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
+                invalidateMenu();
             }
         };
         drwToggle.setDrawerIndicatorEnabled(true);
