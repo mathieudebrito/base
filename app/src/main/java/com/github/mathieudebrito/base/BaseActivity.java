@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.mathieudebrito.base.bus.AppBus;
 import com.github.mathieudebrito.base.injects.GraphRetriever;
 import com.github.mathieudebrito.utils.Logs;
@@ -31,9 +30,6 @@ public class BaseActivity extends ActionBarActivity {
         GraphRetriever.from(this).inject(this);
         this.context = this;
         this.contextActivity = this;
-
-        // Just in case (already added in App)
-        Crashlytics.start(this);
     }
 
     @Override
