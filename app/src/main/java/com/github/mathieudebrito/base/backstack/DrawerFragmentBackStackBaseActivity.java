@@ -19,6 +19,7 @@ import com.github.mathieudebrito.base.backstack.events.ShowRootFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootPlusFragmentEvent;
 import com.github.mathieudebrito.utils.KeyboardUtils;
 import com.github.mathieudebrito.utils.Logs;
+import com.github.mathieudebrito.utils.Objects;
 import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
@@ -59,10 +60,9 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
         }
     }
 
-    @AfterViews
     @Override
     public void bind() {
-        Logs.debug(this, "DrawerBackStack - bind");
+        Logs.method(this);
 
         if (acbToolbar == null) {
             throw new RuntimeException("DrawerBackStack - Toolbar is null");
@@ -98,12 +98,13 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
         // Set the drawer toggle as the DrawerListener
         drwMain.setDrawerListener(drwToggle);
 
-        super.bind();
+        initActionBar();
+        initFragmentManager();
     }
 
     @Override
     public void onBackPressed() {
-        Logs.debug(this, "DrawerBackStack - onBackPressed");
+        Logs.method(this);
 
         if (!super.backPressed()) {
             if (drwMain.isDrawerOpen(layMenu)) {
@@ -129,7 +130,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @UiThread
     @Override
     public void showFragment(ShowFragmentEvent event) {
-        Logs.debug(this, "DrawerBackStack - showFragment", Logs.getClassName(event.fragment));
+        Logs.debug(this, Objects.name(event.fragment));
 
         closeDrawer();
         super.showFragment(event);
@@ -139,7 +140,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @UiThread
     @Override
     public void popFragment(PopFragmentEvent event) {
-        Logs.debug(this, "DrawerBackStack - popFragment", "" + fragments.size());
+        Logs.debug(this,  "fragments: " + fragments.size());
 
         closeDrawer();
         super.popFragment(event);
@@ -148,7 +149,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @Subscribe
     @UiThread
     public void replaceActivity(ReplaceActivityEvent event) {
-        Logs.debug(this, "DrawerBackStack - replaceActivity");
+        Logs.method(this);
 
         closeDrawer();
         super.replaceActivity(event);
@@ -158,7 +159,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @UiThread
     @Override
     public void showActivity(ShowActivityEvent event) {
-        Logs.debug(this, "DrawerBackStack - showActivity");
+        Logs.method(this);
 
         closeDrawer();
         super.showActivity(event);
@@ -168,7 +169,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @UiThread
     @Override
     public void showRootFragment(ShowRootFragmentEvent event) {
-        Logs.debug(this, "DrawerBackStack - showRootFragment");
+        Logs.method(this);
 
         closeDrawer();
         super.showRootFragment(event);
@@ -178,7 +179,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @UiThread
     @Override
     public void showRootPlusFragment(ShowRootPlusFragmentEvent event) {
-        Logs.debug(this, "DrawerBackStack - showRootPlusFragment");
+        Logs.method(this);
 
         closeDrawer();
         super.showRootPlusFragment(event);
@@ -188,7 +189,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @Subscribe
     @UiThread
     public void clearFragments(ClearFragmentsEvent event) {
-        Logs.debug(this, "DrawerBackStack - clearFragments");
+        Logs.method(this);
 
         closeDrawer();
         super.clearFragments(event);
@@ -202,16 +203,16 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
 
     @Override
     public void updateLogoAndUp() {
-        Logs.debug(this, "DrawerBackStack - updateLogoAndUp", "" + fragments.size());
+        Logs.debug(this, "fragments: " + fragments.size());
 
         super.updateLogoAndUp();
 
         boolean show = fragments.size() > 1;
         if (show) {
-            Logs.debug(this, "DrawerBackStack - updateLogoAndUp", "Showing up");
+            Logs.debug(this, "Showing up");
             drwToggle.setDrawerIndicatorEnabled(false);
         } else {
-            Logs.debug(this, "DrawerBackStack - updateLogoAndUp", "Showing Menu");
+            Logs.debug(this, "Showing Menu");
             drwToggle.setDrawerIndicatorEnabled(true);
         }
 

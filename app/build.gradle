@@ -3,8 +3,9 @@ apply plugin: 'android-apt'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenLocal()
         mavenCentral()
+        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
     dependencies {
@@ -14,8 +15,10 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
@@ -62,7 +65,7 @@ dependencies {
 
     compile 'org.androidannotations:androidannotations-api:3.2'
 
-    compile 'com.github.mathieudebrito:utils:1.2.1'
+    compile 'com.github.mathieudebrito:utils:2.0.2'
 
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.dagger:dagger:1.2.2'

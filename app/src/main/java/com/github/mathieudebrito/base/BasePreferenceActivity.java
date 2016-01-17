@@ -34,13 +34,13 @@ public class BasePreferenceActivity extends PreferenceActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Logs.debug("[BASE_PREFERENCE_ACTIVITY] onStart()");
+        Logs.method(this);
         bus.register(this);
     }
 
     @Override
     protected void onStop() {
-        Logs.debug("[BASE_PREFERENCE_ACTIVITY] onStop()");
+        Logs.method(this);
         bus.unregister(this);
         super.onStop();
     }
@@ -48,7 +48,7 @@ public class BasePreferenceActivity extends PreferenceActivity {
     @Override
     public void startActivity(Intent intent) {
         if (intent == null) {
-            Logs.error("[BASE_PREFERENCE_ACTIVITY] startActivity(null)");
+            Logs.error(this, "intent is null");
         }
         super.startActivity(intent);
         if (context != null) {

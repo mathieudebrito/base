@@ -48,10 +48,10 @@ public class AppBusOtto implements AppBus {
 
         // We need to be on the mainLooper to send an event
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Logs.info(this, "post", "MainLooper:" + className);
+            Logs.info(this, "MainLooper:" + className);
             bus.post(event);
         } else {
-            Logs.info(this, "post(", "Handler:" + className);
+            Logs.info(this,  "Handler:" + className);
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {

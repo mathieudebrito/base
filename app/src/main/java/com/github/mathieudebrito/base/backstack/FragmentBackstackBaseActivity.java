@@ -27,6 +27,7 @@ import com.github.mathieudebrito.base.backstack.events.ShowRootFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootPlusFragmentEvent;
 import com.github.mathieudebrito.utils.KeyboardUtils;
 import com.github.mathieudebrito.utils.Logs;
+import com.github.mathieudebrito.utils.Objects;
 import com.google.common.base.Strings;
 import com.squareup.otto.Subscribe;
 
@@ -49,7 +50,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
 
     @OptionsItem(android.R.id.home)
     protected void up() {
-        Logs.debug(this, "BackStack - up");
+        Logs.method(this);
         int count = fragments.size();
 
         if (count > 1) {
@@ -72,14 +73,14 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Logs.debug(this, "BackStack - onNewIntent");
+        Logs.method(this);
         setIntent(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Logs.debug(this, "BackStack - onResume");
+        Logs.method(this);
 
         if (fragments.size() > 0) {
             fragments.getLast().onResume();
@@ -88,19 +89,26 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
 
     @AfterViews
     public void bind() {
-        Logs.debug(this, "BackStack - bind");
+        Logs.method(this);
 
+        initActionBar();
+        initFragmentManager();
+    }
+
+    public void initActionBar() {
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
 
+    public void initFragmentManager() {
         getSupportFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     public void onBackStackChanged() {
                         try {
-                            Logs.debug(this, "BackStack - onBackStackChanged", "" + getSupportFragmentManager().getBackStackEntryCount());
+                            Logs.debug(this, "fragments: " + getSupportFragmentManager().getBackStackEntryCount());
 
                             updateLogoAndUp();
 
@@ -124,20 +132,24 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Logs.debug(this, "BackStack - onBackPressed", "" + fragments.size());
+        Logs.debug(this, "fragments: " + fragments.size());
         backPressed();
     }
 
     public boolean backPressed() {
-        if (!((BaseFragment) fragments.getLast()).onBackPressed()) {
-            if (fragments.size() > 1) {
-                popFragment(new PopFragmentEvent());
+        try {
+            if (!((BaseFragment) fragments.getLast()).onBackPressed()) {
+                if (fragments.size() > 1) {
+                    popFragment(new PopFragmentEvent());
+                    return true;
+                }
+            } else {
                 return true;
             }
-        } else {
-            return true;
+            return false;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
 
@@ -156,13 +168,13 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @UiThread
     public void showFragment(ShowFragmentEvent event) {
         if (event.fragmentName.equals(lastFragmentShown)) {
-            Logs.debug(this, "BackStack - showFragment", "Fragment already showing");
+            Logs.debug(this, "Fragment already showing");
             return;
         }
 
         KeyboardUtils.hide(this);
 
-        Logs.debug(this, "BackStack - showFragment", "Fragment to show : " + Logs.getClassName(event.fragment));
+        Logs.debug(this, "Fragment to show : " + Objects.name(event.fragment));
         lastFragmentShown = event.fragmentName;
 
         fragments.addLast(event.fragment);
@@ -180,7 +192,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Subscribe
     @UiThread
     public void popFragment(PopFragmentEvent event) {
-        Logs.debug(this, "BackStack - popFragment", "" + fragments.size());
+        Logs.debug(this, "" + fragments.size());
 
         if (fragments.size() > 1) {
 
@@ -219,7 +231,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Subscribe
     @UiThread
     public void replaceActivity(ReplaceActivityEvent event) {
-        Logs.debug(this, "BackStack - replaceActivity");
+        Logs.method(this);
         startActivity(event.intent);
         finish();
     }
@@ -227,18 +239,18 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Subscribe
     @UiThread
     public void showActivity(ShowActivityEvent event) {
-        Logs.debug(this, "BackStack - showActivity");
+        Logs.method(this);
         startActivity(event.intent);
     }
 
     @Subscribe
     @UiThread
     public void showRootFragment(ShowRootFragmentEvent event) {
-        Logs.debug(this, "BackStack - showRootFragment");
+        Logs.method(this);
 
         if (fragments.size() > 1) {
             KeyboardUtils.hide(this);
-            Logs.debug(this, "BackStack - showRootFragment", "pop all until " + getSupportFragmentManager().getBackStackEntryAt(0).getName());
+            Logs.debug(this, "pop all until " + getSupportFragmentManager().getBackStackEntryAt(0).getName());
             while (fragments.size() > 1) {
                 fragments.removeLast();
             }
@@ -253,7 +265,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Subscribe
     @UiThread
     public void showRootPlusFragment(ShowRootPlusFragmentEvent event) {
-        Logs.debug(this, "BackStack - showRootPlusFragment");
+        Logs.method(this);
 
         showRootFragment(null);
 
@@ -263,7 +275,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @Subscribe
     @UiThread
     public void clearFragments(ClearFragmentsEvent event) {
-        Logs.debug(this, "BackStack - clearFragments");
+        Logs.method(this);
 
         fragments.clear();
         lastFragmentShown = "";
@@ -278,7 +290,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Logs.debug(this, "BackStack - onActivityResult");
+        Logs.method(this);
         Fragment fragment = fragments.getLast();
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
@@ -301,7 +313,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     }
 
     public void updateLogoAndUp() {
-        Logs.debug(this, "BackStack - updateLogoAndUp", "" + fragments.size());
+        Logs.debug(this, "fragments: " + fragments.size());
 
         // First fragment is MapFragment, second is menuFragment
         // In MapFragment, we show the menu, else, we show the app icon
@@ -311,10 +323,10 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
             if (fragment != null && fragment instanceof Iconable) {
                 icon = ((Iconable) fragment).getIcon();
                 getSupportActionBar().setIcon(icon);
-            }else{
+            } else {
                 getSupportActionBar().setIcon(null);
             }
-        }else{
+        } else {
             getSupportActionBar().setIcon(null);
         }
 

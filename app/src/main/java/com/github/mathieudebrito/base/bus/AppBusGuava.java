@@ -11,7 +11,7 @@ import com.google.common.eventbus.EventBus;
  * The AppBus is the pipe for the events
  * If you want to use this Bus, you have to replace imports to guava @subscribe
  */
-public class AppBusGuava implements AppBus{
+public class AppBusGuava implements AppBus {
 
     final Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -41,10 +41,10 @@ public class AppBusGuava implements AppBus{
 
         // We need to be on the mainLooper to send an event
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Logs.debug("[APP_BUS] MainLooper.post(" + event.getClass().getName() + ")");
+            Logs.debug(this, event.getClass().getName() + " on MainLooper");
             bus.post(event);
         } else {
-            Logs.debug("[APP_BUS] Handler.post(" + event.getClass().getName() + ")");
+            Logs.debug(this, event.getClass().getName() + " on Handler");
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
