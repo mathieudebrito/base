@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="fill_parent"
+              android:minWidth="200dp"
+              android:padding="10dp"
+              android:background="@drawable/bg_toast"
+              android:gravity="center"
+              android:layout_marginBottom="20dp">
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="10dp"
+        tools:src="@drawable/ic_menu"
+        android:tint="@color/colorPrimary"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/txtMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textColor="@color/colorPrimary"
+        tools:text="Put your message here"
+        android:gravity="fill_vertical"
+        android:textSize="14dp" />
+
+</LinearLayout>

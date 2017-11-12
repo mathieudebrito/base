@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="utils">
+    </style>
+
+    <style name="utils.loader">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDrawable">@drawable/pgb_common</item>
+        <!-- <item name="android:indeterminateDuration">2000</item>-->
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="utils.loader.white" parent="utils.loader">
+        <item name="android:indeterminateDrawable">@drawable/pgb_common_white</item>
+    </style>
+
+
+</resources>

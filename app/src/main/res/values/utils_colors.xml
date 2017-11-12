@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="utils_white">#FFFFFF</color>
+    <color name="utils_transparent">#00000000</color>
+
+    <color name="utils_green">#FFACBF4D</color>
+    <color name="utils_green_disabled">#77CEDF6F</color>
+    <color name="utils_green_dark">#FF9BAE5C</color>
+
+    <color name="utils_gray">#FF777777</color>
+    <color name="utils_gray_dark">#FF333333</color>
+    <color name="utils_gray_light">#AA777777</color>
+    <color name="utils_light_gray_light">#AAEEEEEE</color>
+
+    <color name="utils_red">#DA4835</color>
+
+    <color name="utils_blue">#048ed4</color>
+    <color name="utils_blue_disabled">#77048ed4</color>
+    <color name="utils_blue_dark">#FF006a9f</color>
+</resources>

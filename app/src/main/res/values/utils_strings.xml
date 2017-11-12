@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="utils_ok">Ok</string>
+    <string name="utils_validate">Validate</string>
+    <string name="utils_cancel">Cancel</string>
+    <string name="utils_exit">Exit</string>
+
+
+    <string name="utils_exit_app_message">Are you sure you want to exit ?</string>
+
+
+
+    <!-- Errors -->
+    <string name="utils_error_internet_not_available">Internet is not available</string>
+    <string name="utils_error_internet_not_available_feature">Internet is needed to use this feature</string>
+
+</resources>

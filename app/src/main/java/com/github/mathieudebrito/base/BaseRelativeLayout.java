@@ -7,10 +7,8 @@ import android.widget.RelativeLayout;
 
 import com.github.mathieudebrito.base.bus.AppBus;
 import com.github.mathieudebrito.base.injects.GraphRetriever;
-import com.github.mathieudebrito.utils.Dialogs;
 
 import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.UiThread;
 
 import javax.inject.Inject;
 
@@ -25,7 +23,6 @@ public class BaseRelativeLayout extends RelativeLayout {
     protected AppBus bus;
 
     protected Context context;
-    protected Dialog loader;
 
     public BaseRelativeLayout(Context context) {
         super(context);
@@ -65,19 +62,6 @@ public class BaseRelativeLayout extends RelativeLayout {
             bus.unregister(this);
         }
         super.onDetachedFromWindow();
-    }
-
-    @UiThread
-    public void showLoader() {
-        hideLoader();
-        loader = Dialogs.loader(context);
-    }
-
-    @UiThread
-    public void hideLoader() {
-        if (loader != null) {
-            loader.dismiss();
-        }
     }
 
 }

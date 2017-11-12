@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="200dp">
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        style="@style/utils.loader"
+        android:id="@+id/pgbWaiter" />
+
+</RelativeLayout>

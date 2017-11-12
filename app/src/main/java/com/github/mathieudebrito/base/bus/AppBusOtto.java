@@ -3,7 +3,7 @@ package com.github.mathieudebrito.base.bus;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.github.mathieudebrito.utils.Logs;
+import com.github.mathieudebrito.base.utils.Logs;
 import com.squareup.otto.Bus;
 
 

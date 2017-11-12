@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.github.mathieudebrito.base.bus.AppBus;
 import com.github.mathieudebrito.base.injects.GraphRetriever;
-import com.github.mathieudebrito.utils.Logs;
 
 import javax.inject.Inject;
 
@@ -35,22 +34,17 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Logs.debug(this, "onStart()");
         bus.register(this);
     }
 
     @Override
     protected void onStop() {
-        Logs.debug(this, "onStop()");
         bus.unregister(this);
         super.onStop();
     }
 
     @Override
     public void startActivity(Intent intent) {
-        if (intent == null) {
-            Logs.error(this, "startActivity(null)");
-        }
         super.startActivity(intent);
         if (context != null) {
             this.overridePendingTransition(R.anim.base_fade_in, R.anim.base_fade_out);

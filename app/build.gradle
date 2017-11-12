@@ -1,48 +1,41 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
 
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.+'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4+'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
     maven { url "https://jitpack.io" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
-apt {
-    arguments {
-        //androidManifestFile variant.processResources.manifestFile
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        //resourcePackageName android.defaultConfig.packageName
-        resourcePackageName "com.github.mathieudebrito.base"
-    }
-}
-
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "$buildTools"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 22
 
         // CHANGE THIS IN GRADLE.PROPERTIES
         versionName project.VERSION_NAME
         versionCode project.VERSION_CODE.toInteger()
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["resourcePackageName": "com.github.mathieudebrito.base"]
+            }
+        }
+    }
+    aaptOptions {
+        cruncherEnabled = false
     }
     buildTypes {
         release {
@@ -52,24 +45,27 @@ android {
     }
 }
 
+def androidannotations_version = "4.3.1"
+
 dependencies {
 
     // Annotation processing
-    apt "org.androidannotations:androidannotations:3.2"
-    apt "com.squareup.dagger:dagger-compiler:1.2.2"
+    annotationProcessor "org.androidannotations:androidannotations:${androidannotations_version}"
+    annotationProcessor "com.squareup.dagger:dagger-compiler:1.2.2"
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    implementation "com.android.support:appcompat-v7:${supportVersion}"
+    implementation "com.android.support:cardview-v7:${supportVersion}"
+    implementation "com.android.support:preference-v7:${supportVersion}"
+    implementation "com.android.support:preference-v14:${supportVersion}"
+    implementation "com.android.support:support-v4:${supportVersion}"
 
+    implementation "org.androidannotations:androidannotations-api:${androidannotations_version}"
 
-    compile 'org.androidannotations:androidannotations-api:3.2'
+    implementation('com.github.afollestad.material-dialogs:core:0.8.6.2@aar') {transitive = true}
+    implementation('com.github.afollestad.material-dialogs:commons:0.8.6.2@aar') {transitive = true}
 
-    compile 'com.github.mathieudebrito:utils:2.0.2'
-
-    compile 'com.squareup.picasso:picasso:2.5.0'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    compile 'com.squareup:otto:1.3.5'                               // Event bus (pattern observer)
+    implementation 'com.squareup.dagger:dagger:1.2.2'
+    implementation 'com.squareup:otto:1.3.5'                               // Event bus (pattern observer)
 }
 
 apply from: '../maven_local.gradle'

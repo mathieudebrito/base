@@ -6,9 +6,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.github.mathieudebrito.base.BaseFragment;
 import com.github.mathieudebrito.base.R;
 import com.github.mathieudebrito.base.backstack.events.ClearFragmentsEvent;
 import com.github.mathieudebrito.base.backstack.events.PopFragmentEvent;
@@ -17,19 +17,18 @@ import com.github.mathieudebrito.base.backstack.events.ShowActivityEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootPlusFragmentEvent;
-import com.github.mathieudebrito.utils.KeyboardUtils;
-import com.github.mathieudebrito.utils.Logs;
-import com.github.mathieudebrito.utils.Objects;
+import com.github.mathieudebrito.base.utils.KeyboardUtils;
+import com.github.mathieudebrito.base.utils.Logs;
+import com.github.mathieudebrito.base.utils.Objects;
 import com.squareup.otto.Subscribe;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 
-@EActivity(resName = "base_act_main")
+@EActivity(resName = "act_main")
 public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseActivity {
 
     @ViewById(resName = "drwMain")
@@ -38,7 +37,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
     @ViewById
     protected Toolbar acbToolbar;
     @ViewById(resName = "layMenu")
-    protected RelativeLayout layMenu;
+    protected FrameLayout layMenu;
 
     @OptionsItem(android.R.id.home)
     protected void up() {
@@ -47,7 +46,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
         if (count > 1) {
             // Back button
 
-            if (!((BaseFragment) fragments.getLast()).onBackPressed()) {
+            if (!lastFragmentOnBackPressed()) {
                 popFragment(new PopFragmentEvent());
             }
         } else {
@@ -217,7 +216,7 @@ public class DrawerFragmentBackStackBaseActivity extends FragmentBackStackBaseAc
         }
 
         drwToggle.syncState();
-        drwToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        drwToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
         drwToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

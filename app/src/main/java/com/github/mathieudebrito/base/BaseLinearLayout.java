@@ -1,5 +1,6 @@
 package com.github.mathieudebrito.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
@@ -7,17 +8,22 @@ import android.widget.LinearLayout;
 import com.github.mathieudebrito.base.bus.AppBus;
 import com.github.mathieudebrito.base.injects.GraphRetriever;
 
+import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.UiThread;
+
 import javax.inject.Inject;
 
 /**
  * @Injectable LinearLayout
  */
+@EViewGroup
 public class BaseLinearLayout extends LinearLayout {
 
     @Inject
     protected AppBus bus;
 
     protected Context context;
+    protected Dialog loader;
 
     public BaseLinearLayout(Context context) {
         super(context);
@@ -56,4 +62,5 @@ public class BaseLinearLayout extends LinearLayout {
         }
         super.onDetachedFromWindow();
     }
+
 }

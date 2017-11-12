@@ -16,6 +16,7 @@ import android.view.Window;
 
 import com.github.mathieudebrito.base.BaseActivity;
 import com.github.mathieudebrito.base.BaseFragment;
+import com.github.mathieudebrito.base.BasePreferenceFragment;
 import com.github.mathieudebrito.base.R;
 import com.github.mathieudebrito.base.backstack.events.ClearFragmentsEvent;
 import com.github.mathieudebrito.base.backstack.events.PopFragmentEvent;
@@ -25,10 +26,10 @@ import com.github.mathieudebrito.base.backstack.events.ShowActivityEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootFragmentEvent;
 import com.github.mathieudebrito.base.backstack.events.ShowRootPlusFragmentEvent;
-import com.github.mathieudebrito.utils.KeyboardUtils;
-import com.github.mathieudebrito.utils.Logs;
-import com.github.mathieudebrito.utils.Objects;
-import com.google.common.base.Strings;
+import com.github.mathieudebrito.base.utils.KeyboardUtils;
+import com.github.mathieudebrito.base.utils.Logs;
+import com.github.mathieudebrito.base.utils.Objects;
+import com.github.mathieudebrito.base.utils.Strings;
 import com.squareup.otto.Subscribe;
 
 import org.androidannotations.annotations.AfterViews;
@@ -56,7 +57,7 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
         if (count > 1) {
             // Back button
 
-            if (!((BaseFragment) fragments.getLast()).onBackPressed()) {
+            if (!lastFragmentOnBackPressed()) {
                 popFragment(new PopFragmentEvent());
             }
         }
@@ -137,8 +138,10 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     }
 
     public boolean backPressed() {
+        Logs.method(this, "fragments: " + fragments.size());
+
         try {
-            if (!((BaseFragment) fragments.getLast()).onBackPressed()) {
+            if (!lastFragmentOnBackPressed()) {
                 if (fragments.size() > 1) {
                     popFragment(new PopFragmentEvent());
                     return true;
@@ -146,9 +149,17 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
             } else {
                 return true;
             }
-            return false;
         } catch (Exception e) {
-            return false;
+
+        }return false;
+    }
+
+    public boolean lastFragmentOnBackPressed() {
+        Fragment lastFragment = fragments.getLast();
+        if (lastFragment instanceof BasePreferenceFragment) {
+            return ((BasePreferenceFragment) lastFragment).onBackPressed();
+        } else {
+            return ((BaseFragment) lastFragment).onBackPressed();
         }
     }
 
@@ -168,13 +179,13 @@ public class FragmentBackStackBaseActivity extends BaseActivity {
     @UiThread
     public void showFragment(ShowFragmentEvent event) {
         if (event.fragmentName.equals(lastFragmentShown)) {
-            Logs.debug(this, "Fragment already showing");
+            Logs.warn(this, "Fragment already showing");
             return;
         }
 
         KeyboardUtils.hide(this);
 
-        Logs.debug(this, "Fragment to show : " + Objects.name(event.fragment));
+        Logs.method(this, "Fragment to show : " + Objects.name(event.fragment));
         lastFragmentShown = event.fragmentName;
 
         fragments.addLast(event.fragment);

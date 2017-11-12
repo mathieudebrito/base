@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="status_bar_padding">24dp</dimen>
+    <dimen name="main_sliding_header_height">72dp</dimen>
+
+    <!-- Menu -->
+    <dimen name="btn_menu_height">48dp</dimen>
+    <dimen name="btn_menu_ic_size">30dp</dimen>
+    <dimen name="btn_menu_incentive_ic_size">42dp</dimen>
+    <dimen name="btn_menu_incentive_ic_padding">10dp</dimen>
+    <dimen name="btn_menu_margin_left">16dp</dimen>
+    <dimen name="btn_menu_text_margin_left">76dp</dimen>
+    <dimen name="btn_menu_text_margin_right">20dp</dimen>
+
+</resources>

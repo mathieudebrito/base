@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="base_bg_splashscreen">#FFDDDDDD</color>
+    <color name="colorPrimary">#FFDDDDDD</color>
+    <color name="colorPrimaryDark">#FFDDDDDD</color>
+    <color name="colorPrimaryLight">#FFDDDDDD</color>
+
+</resources>

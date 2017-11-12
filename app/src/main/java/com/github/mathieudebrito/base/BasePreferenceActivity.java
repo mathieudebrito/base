@@ -8,7 +8,6 @@ import android.preference.PreferenceActivity;
 
 import com.github.mathieudebrito.base.bus.AppBus;
 import com.github.mathieudebrito.base.injects.GraphRetriever;
-import com.github.mathieudebrito.utils.Logs;
 
 import javax.inject.Inject;
 
@@ -19,7 +18,6 @@ public class BasePreferenceActivity extends PreferenceActivity {
 
     @Inject
     protected AppBus bus;
-
     protected Context context;
     protected Activity contextActivity;
 
@@ -34,22 +32,17 @@ public class BasePreferenceActivity extends PreferenceActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Logs.method(this);
         bus.register(this);
     }
 
     @Override
     protected void onStop() {
-        Logs.method(this);
         bus.unregister(this);
         super.onStop();
     }
 
     @Override
     public void startActivity(Intent intent) {
-        if (intent == null) {
-            Logs.error(this, "intent is null");
-        }
         super.startActivity(intent);
         if (context != null) {
             this.overridePendingTransition(R.anim.base_fade_in, R.anim.base_fade_out);
